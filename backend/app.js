@@ -6,13 +6,13 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 app.use(cors({
-  origin: 'https://localhost:3000',
+  origin: 'https://my-project-m9dq-iamfineboyygabriel.vercel.app',
   credentials: true
 }));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/", (req, res) => {
+app.use("/test", (req, res) => {
   res.send("Hello world!");
 });
 
