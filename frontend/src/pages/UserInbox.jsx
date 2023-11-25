@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
 import styles from "../styles/styles";
-const ENDPOINT = " https://my-project-qdkw5a44w-iamfineboyygabriel.vercel.app";
+const ENDPOINT = " https://my-project-a7imxv2q9-iamfineboyygabriel.vercel.app";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 const UserInbox = () => {
