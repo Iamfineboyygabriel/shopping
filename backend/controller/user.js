@@ -47,7 +47,8 @@ router.post("/create-user", async (req, res, next) => {
     console.log("User object:", user);
     
     const activationToken = createActivationToken(user);
-    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    // const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    const activationUrl = `http://my-project-o9swus28m-iamfineboyygabriel.vercel.app/activation/${activationToken}`;
     
     console.log("Activation URL:", activationUrl);
 
