@@ -30,7 +30,8 @@ const Login = () => {
         window.location.reload(true); 
       })
       .catch((err) => {
-        toast.error("error occured while login in");
+        // console.log(err)
+        toast.error(err.response.data.message);
       });
   };
 

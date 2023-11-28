@@ -8,9 +8,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
+import whatsapp from "../../src/Assests/images/blackwhatsapp.jpeg";
 import styles from "../styles/styles";
-const ENDPOINT = " https://my-project-a7imxv2q9-iamfineboyygabriel.vercel.app";
-const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+const ENDPOINT = "http://localhost:4000";
+let socketId = null;
 
 const UserInbox = () => {
   const { user, loading } = useSelector((state) => state.user);
@@ -26,6 +27,44 @@ const UserInbox = () => {
   const [open, setOpen] = useState(false);
   const scrollRef = useRef(null);
 
+  // useEffect(() => {
+  //   socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+  // }, []);
+
+  useEffect(() => {
+    socketId = socketIO(ENDPOINT);
+
+    return () => {
+      socketId.disconnect();
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   if (!socket) return;
+
+  //   socketId.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   socketId.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   },[]);
+
+  //   arrivalMessage &&
+  //     currentChat?.members.includes(arrivalMessage.sender) &&
+  //     setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
+
   useEffect(() => {
     socketId.on("getMessage", (data) => {
       setArrivalMessage({
@@ -37,6 +76,7 @@ const UserInbox = () => {
   }, []);
 
   useEffect(() => {
+    // Added check to avoid unnecessary updates when arrivalMessage is null
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
@@ -334,7 +374,10 @@ const SellerInbox = ({
   handleImageUpload,
 }) => {
   return (
-    <div className="w-[full] min-h-full flex flex-col justify-between p-5">
+    <div
+      className="w-[full] min-h-full flex flex-col justify-between p-5"
+      style={{ backgroundImage: `url(${whatsapp})` }}
+    >
       {/* message header */}
       <div className="w-full flex p-3 items-center justify-between bg-slate-200">
         <div className="flex">
@@ -382,7 +425,7 @@ const SellerInbox = ({
                 <div>
                   <div
                     className={`w-max p-2 rounded ${
-                      item.sender === sellerId ? "bg-[#000]" : "bg-[#38c776]"
+                      item.sender === sellerId ? "bg-[#000]" : "bg-[ #166534]"
                     } text-[#fff] h-min`}
                   >
                     <p>{item.text}</p>
@@ -423,6 +466,7 @@ const SellerInbox = ({
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             className={`${styles.input}`}
+            style={{ fontWeight: "bold" }}
           />
           <input type="submit" value="Send" className="hidden" id="send" />
           <label htmlFor="send">

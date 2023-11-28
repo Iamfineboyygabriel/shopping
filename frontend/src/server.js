@@ -1,1 +1,2 @@
-export const server = "https://my-project-a7imxv2q9-iamfineboyygabriel.vercel.app/api/v2";
+export const server = "http://localhost:8000/api/v2";
+export const backend_url = "http://localhost:8000/"

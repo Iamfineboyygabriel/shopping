@@ -6,7 +6,7 @@ import { server } from "../server";
 
 const SellerActivationPage = () => {
   const { activation_token } = useParams();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (activation_token) {
@@ -19,7 +19,13 @@ const SellerActivationPage = () => {
             console.log(res);
           })
           .catch((err) => {
-            setError(true);
+            console.log(err)
+            if (!err.response.data) {
+              setError(err.message);
+              return;
+            }
+            
+            setError(err.response.data.message);
           });
       };
       sendRequest();
@@ -36,8 +42,8 @@ const SellerActivationPage = () => {
         alignItems: "center",
       }}
     >
-      {error ? (
-        <p>Your token is expired!</p>
+      {error !== '' ? (
+        <p>{error}</p>
       ) : (
         <p>Your account has been created suceessfully!</p>
       )}

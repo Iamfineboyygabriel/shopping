@@ -1,17 +1,20 @@
-const socketIO = require("socket.io");
-const http = require("http");
-const express = require("express");
-const cors = require("cors");
+import {Server} from "socket.io";
+import { createServer } from "http";
+import express, { json } from "express";
+import cors from "cors";
+import dotenv from 'dotenv';
 const app = express();
-const server = http.createServer(app);
-const io = socketIO(server);
-
-require("dotenv").config({
-  path: "./.env",
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000'
+  }
 });
 
+dotenv.config();
+
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 app.get("/", (req, res) => {
   res.send("Hello world from socket server!");

@@ -9,8 +9,8 @@ import styles from "../../styles/styles";
 import { TfiGallery } from "react-icons/tfi";
 import socketIO from "socket.io-client";
 import { format } from "timeago.js";
-const ENDPOINT = "https://my-project-a7imxv2q9-iamfineboyygabriel.vercel.app";
-const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+const ENDPOINT = "http://localhost:4000";
+let socketId = null;
 
 const DashboardMessages = () => {
   const { seller, isLoading } = useSelector((state) => state.seller);
@@ -27,6 +27,28 @@ const DashboardMessages = () => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
+    socketId = socketIO(ENDPOINT)
+    
+    return () => {
+      socketId.disconnect();
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   socketId.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+
+  //   arrivalMessage &&
+  //     currentChat?.members.includes(arrivalMessage.sender) &&
+  //     setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
     socketId.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -37,10 +59,15 @@ const DashboardMessages = () => {
   }, []);
 
   useEffect(() => {
+    // Added check to avoid unnecessary updates when arrivalMessage is null
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
+
+  // useEffect(() => {
+  //   socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+  // },[])
 
   useEffect(() => {
     const getConversation = async () => {

@@ -1,5 +1,7 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const User = require("../model/user");
+require("dotenv").config();
 const router = express.Router();
 const cloudinary = require("cloudinary");
 const ErrorHandler = require("../utils/ErrorHandler");
@@ -7,13 +9,22 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
+const multer = require('multer');
+const upload = multer();
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
-// create user
 router.post("/create-user", async (req, res, next) => {
   try {
     const { name, email, password, avatar } = req.body;
+    console.log("Server Form Values:", name, email, password, avatar);
+
+       // Add this log statement
+       console.log("Before findOne");
+
     const userEmail = await User.findOne({ email });
+
+      // Add this log statement
+      console.log("After findOne", userEmail);
 
     if (userEmail) {
       return next(new ErrorHandler("User already exists", 400));
@@ -22,7 +33,7 @@ router.post("/create-user", async (req, res, next) => {
     const myCloud = await cloudinary.v2.uploader.upload(avatar, {
       folder: "avatars",
     });
-
+    
     const user = {
       name: name,
       email: email,
@@ -33,9 +44,12 @@ router.post("/create-user", async (req, res, next) => {
       },
     };
 
+    console.log("User object:", user);
+    
     const activationToken = createActivationToken(user);
-
-    const activationUrl = `http://my-project-hfk8-qngkxzdj9-iamfineboyygabriel.vercel.app/activation/${activationToken}`;
+    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    
+    console.log("Activation URL:", activationUrl);
 
     try {
       await sendMail({
@@ -43,22 +57,28 @@ router.post("/create-user", async (req, res, next) => {
         subject: "Activate your account",
         message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}`,
       });
+
+      console.log("Activation email sent successfully");
+
       res.status(201).json({
         success: true,
-        message: `please check your email:- ${user.email} to activate your account!`,
+        message: `Please check your email (${user.email}) to activate your account!`,
       });
     } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+      console.error('Email sending error:', error);
+      return next(new ErrorHandler('Failed to send activation email', 500));
     }
   } catch (error) {
-    return next(new ErrorHandler(error.message, 400));
+    console.error('Create user error:', error);
+    return next(new ErrorHandler(error.data.message, 400));
   }
 });
+
 
 // create activation token
 const createActivationToken = (user) => {
   return jwt.sign(user, process.env.ACTIVATION_SECRET, {
-    expiresIn: "5m",
+    expiresIn: "1h",
   });
 };
 
@@ -110,21 +130,25 @@ router.post(
       }
 
       const user = await User.findOne({ email }).select("+password");
-
+      
       if (!user) {
         return next(new ErrorHandler("User doesn't exists!", 400));
       }
-
-      const isPasswordValid = await user.comparePassword(password);
-
+      
+      console.log('here')
+      // const isPasswordValid = await User.comparePassword(password);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      console.log(isPasswordValid)
       if (!isPasswordValid) {
         return next(
           new ErrorHandler("Please provide the correct information", 400)
-        );
-      }
-
+          );
+        }
+        
+        console.log("Found user:", user);
       sendToken(user, 201, res);
     } catch (error) {
+      console.log(error)
       return next(new ErrorHandler(error.message, 500));
     }
   })

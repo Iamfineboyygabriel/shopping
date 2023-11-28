@@ -13,14 +13,14 @@ const AllProducts = () => {
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
   });
 
   const handleDelete = (id) => {
     dispatch(deleteProduct(id));
-    window.location.reload();
+    //window.location.reload();
   };
 
   const columns = [
@@ -81,7 +81,9 @@ const AllProducts = () => {
       renderCell: (params) => {
         return (
           <>
-            <Button onClick={() => handleDelete(params.id)}>
+            <Button onClick={() => {
+              handleDelete(params.id)
+              }}>
               <AiOutlineDelete size={20} />
             </Button>
           </>
@@ -106,7 +108,9 @@ const AllProducts = () => {
   return (
     <>
       {isLoading ? (
-        <Loader />
+        <>
+          <Loader />
+        </>
       ) : (
         <div className="w-full mx-8 pt-1 mt-10 bg-white">
           <DataGrid

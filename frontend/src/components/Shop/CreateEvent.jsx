@@ -61,14 +61,14 @@ const CreateEvent = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    setImages([]);
-
     files.forEach((file) => {
       const reader = new FileReader();
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImages((old) => [...old, reader.result]);
+          setImages((old) => {
+            return [...old, reader.result]
+          });
         }
       };
       reader.readAsDataURL(file);
@@ -96,6 +96,9 @@ const CreateEvent = () => {
       start_Date: startDate?.toISOString(),
       Finish_Date: endDate?.toISOString(),
     };
+
+    setImages([]);
+
     dispatch(createevent(data));
   };
 
@@ -256,13 +259,15 @@ const CreateEvent = () => {
               <AiOutlinePlusCircle size={30} className="mt-3" color="#555" />
             </label>
             {images &&
-              images.map((i) => (
-                <img
-                  src={i}
-                  key={i}
-                  alt=""
-                  className="h-[120px] w-[120px] object-cover m-2"
-                />
+              images.map((i, index) => (
+                <div key={index}>
+                  <img
+                    src={i}
+                    key={i}
+                    alt=""
+                    className="h-[120px] w-[120px] object-cover m-2"
+                  />
+                </div>
               ))}
           </div>
           <br />
