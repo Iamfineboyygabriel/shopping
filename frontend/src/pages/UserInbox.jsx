@@ -10,7 +10,8 @@ import { AiOutlineArrowRight, AiOutlineSend } from "react-icons/ai";
 import { TfiGallery } from "react-icons/tfi";
 import whatsapp from "../../src/Assests/images/blackwhatsapp.jpeg";
 import styles from "../styles/styles";
-const ENDPOINT = "http://localhost:4000";
+// const ENDPOINT = "http://localhost:4000";
+const ENDPOINT = "http://my-project-o9swus28m-iamfineboyygabriel.vercel.app"
 let socketId = null;
 
 const UserInbox = () => {
