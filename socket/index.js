@@ -5,9 +5,15 @@ import cors from "cors";
 import dotenv from 'dotenv';
 const app = express();
 const server = createServer(app);
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'http://localhost:3000'
+//   }
+// });
+
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000'
+    origin: 'http://my-project-hfk8-7853qs9jp-iamfineboyygabriel.vercel.app'
   }
 });
 
