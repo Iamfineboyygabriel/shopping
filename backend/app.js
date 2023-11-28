@@ -10,11 +10,14 @@ const cors = require("cors");
 //   credentials: true
 // }));
 
-app.use(cors({
-  origin: 'http://my-project-hfk8-7853qs9jp-iamfineboyygabriel.vercel.app',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://my-project-hfk8-7853qs9jp-iamfineboyygabriel.vercel.app",
+    credentials: true,
+  })
+);
 
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
