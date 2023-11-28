@@ -5,17 +5,17 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   credentials: true
-// }));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
-app.use(
-  cors({
-    origin: "http://my-project-hfk8-7853qs9jp-iamfineboyygabriel.vercel.app",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://my-project-12jd.vercel.app",
+//     credentials: true,
+//   })
+// );
 
 app.use(cors(corsOptions));
 

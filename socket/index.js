@@ -4,23 +4,27 @@ import express, { json } from "express";
 import cors from "cors";
 import dotenv from 'dotenv';
 const app = express();
-const server = createServer(app);
+// const server = http.createServer(app);
+const server = http.createServer(app);
+
 // const io = new Server(server, {
 //   cors: {
 //     origin: 'http://localhost:3000'
 //   }
 // });
 
-const io = new Server(server, {
-  cors: {
-    origin: 'http://my-project-hfk8-7853qs9jp-iamfineboyygabriel.vercel.app'
-  }
+require("dotenv").config({
+  path: "./.env",
 });
+
+
+
 
 dotenv.config();
 
 app.use(cors());
-app.use(json());
+// app.use(json());
+app.use(express.json)
 
 app.get("/", (req, res) => {
   res.send("Hello world from socket server!");

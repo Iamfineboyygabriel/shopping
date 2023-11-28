@@ -9,8 +9,8 @@ import styles from "../../styles/styles";
 import { TfiGallery } from "react-icons/tfi";
 import socketIO from "socket.io-client";
 import { format } from "timeago.js";
-// const ENDPOINT = "http://localhost:4000";
- const ENDPOINT = "http://my-project-cj49-3trbd2z8t-iamfineboyygabriel.vercel.app";
+const ENDPOINT = "http://localhost:4000";
+//  const ENDPOINT = "http://my-project-cj49-3trbd2z8t-iamfineboyygabriel.vercel.app";
 let socketId = null;
 
 const DashboardMessages = () => {
