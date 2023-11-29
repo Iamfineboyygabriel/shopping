@@ -47,7 +47,10 @@ router.post("/create-user", async (req, res, next) => {
     console.log("User object:", user);
     
     const activationToken = createActivationToken(user);
-    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    // const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    const activationUrl = `http://socket-server-klme.vercel.app/activation/${activationToken}`;
+    //frontend link
+
     
     console.log("Activation URL:", activationUrl);
 

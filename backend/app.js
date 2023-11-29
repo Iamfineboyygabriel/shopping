@@ -5,9 +5,9 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-//frontend link local host 3000 before
+//frontend link,  local host 3000 before
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://socket-server-klme.vercel.app',
   credentials: true
 }));
 
