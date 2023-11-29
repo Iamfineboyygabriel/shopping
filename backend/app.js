@@ -7,16 +7,11 @@ const cors = require("cors");
 
 //frontend link local host 3000 before
 app.use(cors({
-  origin: 'http://my-project-6bps.vercel.app',
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 
-// app.use(
-//   cors({
-//     origin: "http://my-project-12jd.vercel.app",
-//     credentials: true,
-//   })
-// );
+
 
 app.use(cors(corsOptions));
 

@@ -39,8 +39,7 @@ router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
 
     const activationToken = createActivationToken(seller);
 
-    // const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
-    const activationUrl = `http://my-project-6bps.vercel.app/seller/activation/${activationToken}`
+    const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
 
     try {
       await sendMail({

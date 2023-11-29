@@ -11,7 +11,6 @@ import { TfiGallery } from "react-icons/tfi";
 import whatsapp from "../../src/Assests/images/blackwhatsapp.jpeg";
 import styles from "../styles/styles";
 const ENDPOINT = "http://localhost:4000";
-// const ENDPOINT = "http://my-project-cj49-3trbd2z8t-iamfineboyygabriel.vercel.app"
 let socketId = null;
 
 const UserInbox = () => {
