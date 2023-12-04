@@ -7,13 +7,9 @@ const cors = require("cors");
 
 //frontend link,  local host 3000 before
 app.use(cors({
-  origin: 'https://socket-server-klme.vercel.app',
+  origin: 'http://localhost:3001',
   credentials: true
 }));
-
-
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
