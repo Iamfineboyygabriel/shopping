@@ -5,11 +5,13 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-//frontend link,  local host 3000 before
-app.use(cors({
-  origin: 'http://localhost:3001',
-  credentials: true
-}));
+//frontend link, local host 3000
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
