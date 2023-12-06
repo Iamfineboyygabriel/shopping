@@ -40,7 +40,7 @@ router.post(
 
       const activationToken = createActivationToken(seller);
 
-      const activationUrl = `http://localhost:3001/seller/activation/${activationToken}`;
+      const activationUrl = `https://shopping-j2sb.vercel.app/seller/activation/${activationToken}`;
       // const activationUrl = `https://shopping-gamma-five.vercel.app/seller/activation/${activationToken}`;
       //frontend link
 

@@ -47,7 +47,7 @@ router.post("/create-user", async (req, res, next) => {
     console.log("User object:", user);
     
     const activationToken = createActivationToken(user);
-    const activationUrl = `http://localhost:3001/activation/${activationToken}`;
+    const activationUrl = `https://shopping-j2sb.vercel.app/activation/${activationToken}`;
     // const activationUrl = `https://shopping-gamma-five.vercel.app/activation/${activationToken}`;
     //frontend link
 

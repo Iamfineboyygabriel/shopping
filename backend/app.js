@@ -8,10 +8,16 @@ const cors = require("cors");
 //frontend link, local host 3000
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "https://shopping-j2sb.vercel.app",
     credentials: true,
   })
 );
+// app.use(
+//   cors({
+//     origin: "http://localhost:3001",
+//     credentials: true,
+//   })
+// );
 
 app.use(express.json());
 app.use(cookieParser());
