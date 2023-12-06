@@ -80,19 +80,13 @@ const cors = require("cors");
 
 
 // Frontend link, deployed on Vercel
-app.use(
-  allowCors,
-  express.json(),
-  cookieParser(),
-  (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://shopping-j2sb.vercel.app');
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  },
-  bodyParser.urlencoded({ extended: true, limit: '50mb' })
-);
+app.use(cors({
+  origin: ['https://shopping-j2sb.vercel.app',],
+  credentials: true
+}));
+
+
+
 
 
 
