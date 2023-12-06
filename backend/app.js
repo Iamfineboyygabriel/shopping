@@ -77,6 +77,8 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+
+
 // Frontend link, deployed on Vercel
 app.use(
   allowCors,
@@ -95,6 +97,7 @@ app.use(
 
 
 app.use(express.json());
+app.use(cors())
 app.use(cookieParser());
 app.use("/test", (req, res) => {
   res.send("Hello world!");
