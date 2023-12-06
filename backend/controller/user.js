@@ -13,6 +13,19 @@ const multer = require('multer');
 const upload = multer();
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
+const cors = require('cors'); // Import cors
+
+// Apply CORS headers
+router.use(
+  cors({
+    origin: 'https://shopping-j2sb.vercel.app/',
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  })
+);
+
+
 router.post("/create-user", async (req, res, next) => {
   try {
     const { name, email, password, avatar } = req.body;
