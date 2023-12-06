@@ -10,8 +10,10 @@ app.use(
   cors({
     origin: "https://shopping-j2sb.vercel.app",
     credentials: true,
+    optionSuccessStatus:200
   })
 );
+app.use(cors(corsOptions));
 // app.use(
 //   cors({
 //     origin: "http://localhost:3001",
