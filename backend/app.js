@@ -8,14 +8,14 @@ const cors = require("cors");
 // Frontend link, deployed on Vercel
 app.use(
   cors({
-    origin: "https://shopping-j2sb.vercel.app",
+    origin: "https://shopping-j2sb.vercel.app/",
     credentials: true,
     optionsSuccessStatus: 200, // Some older browsers choke on 204
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Content-Type, Authorization",
   })
 );
-git 
+git;
 app.use(cors(corsOptions));
 // app.use(
 //   cors({
