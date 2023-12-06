@@ -1,7 +1,26 @@
 const app = require("./app");
 const connectDatabase = require("./db/Database");
 const cloudinary = require("cloudinary");
+const cors = require('cors')
 
+
+app.use(cors())
+app.use(express.json());
+
+// Frontend link, deployed on Vercel
+app.use(
+  allowCors,
+  express.json(),
+  cookieParser(),
+  (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://shopping-j2sb.vercel.app');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  },
+  bodyParser.urlencoded({ extended: true, limit: '50mb' })
+);
 
 // Handling uncaught Exception
 process.on("uncaughtException", (err) => {
