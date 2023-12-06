@@ -174,7 +174,8 @@ router.get(
     try {
       res.cookie("seller_token", null, {
         expires: new Date(Date.now()),
-        httpOnly: true,
+        // httpOnly: true,
+        httpsOnly: true,
         sameSite: "none",
         secure: true,
       });
