@@ -17,12 +17,7 @@ app.use(
   })
 );
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3001",
-//     credentials: true,
-//   })
-// );
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -66,5 +61,3 @@ app.use("/api/v2/withdraw", withdraw);
 app.use(ErrorHandler);
 
 module.exports = app;
-
-
