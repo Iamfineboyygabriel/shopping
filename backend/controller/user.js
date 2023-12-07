@@ -9,23 +9,23 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
-const multer = require('multer');
+const multer = require("multer");
 const upload = multer();
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
-
 router.post("/create-user", async (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app");
   try {
     const { name, email, password, avatar } = req.body;
     console.log("Server Form Values:", name, email, password, avatar);
 
-       // Add this log statement
-       console.log("Before findOne");
+    // Add this log statement
+    console.log("Before findOne");
 
     const userEmail = await User.findOne({ email });
 
-      // Add this log statement
-      console.log("After findOne", userEmail);
+    // Add this log statement
+    console.log("After findOne", userEmail);
 
     if (userEmail) {
       return next(new ErrorHandler("User already exists", 400));
@@ -34,7 +34,7 @@ router.post("/create-user", async (req, res, next) => {
     const myCloud = await cloudinary.v2.uploader.upload(avatar, {
       folder: "avatars",
     });
-    
+
     const user = {
       name: name,
       email: email,
@@ -46,13 +46,12 @@ router.post("/create-user", async (req, res, next) => {
     };
 
     console.log("User object:", user);
-    
+
     const activationToken = createActivationToken(user);
     const activationUrl = `https://shopping-j2sb.vercel.app/activation/${activationToken}`;
     // const activationUrl = `https://shopping-gamma-five.vercel.app/activation/${activationToken}`;
     //frontend link
 
-    
     console.log("Activation URL:", activationUrl);
 
     try {
@@ -69,15 +68,14 @@ router.post("/create-user", async (req, res, next) => {
         message: `Please check your email (${user.email}) to activate your account!`,
       });
     } catch (error) {
-      console.error('Email sending error:', error);
-      return next(new ErrorHandler('Failed to send activation email', 500));
+      console.error("Email sending error:", error);
+      return next(new ErrorHandler("Failed to send activation email", 500));
     }
   } catch (error) {
-    console.error('Create user error:', error);
+    console.error("Create user error:", error);
     return next(new ErrorHandler(error.data.message, 400));
   }
 });
-
 
 // create activation token
 const createActivationToken = (user) => {
@@ -89,6 +87,7 @@ const createActivationToken = (user) => {
 // activate user
 router.post(
   "/activation",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { activation_token } = req.body;
@@ -125,6 +124,7 @@ router.post(
 // login user
 router.post(
   "/login-user",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email, password } = req.body;
@@ -134,25 +134,25 @@ router.post(
       }
 
       const user = await User.findOne({ email }).select("+password");
-      
+
       if (!user) {
         return next(new ErrorHandler("User doesn't exists!", 400));
       }
-      
-      console.log('here')
+
+      console.log("here");
       // const isPasswordValid = await User.comparePassword(password);
       const isPasswordValid = await bcrypt.compare(password, user.password);
-      console.log(isPasswordValid)
+      console.log(isPasswordValid);
       if (!isPasswordValid) {
         return next(
           new ErrorHandler("Please provide the correct information", 400)
-          );
-        }
-        
-        console.log("Found user:", user);
+        );
+      }
+
+      console.log("Found user:", user);
       sendToken(user, 201, res);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return next(new ErrorHandler(error.message, 500));
     }
   })
@@ -162,6 +162,7 @@ router.post(
 router.get(
   "/getuser",
   isAuthenticated,
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const user = await User.findById(req.user.id);
@@ -183,6 +184,7 @@ router.get(
 // log out user
 router.get(
   "/logout",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       res.cookie("token", null, {
@@ -205,6 +207,7 @@ router.get(
 // update user info
 router.put(
   "/update-user-info",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -244,6 +247,7 @@ router.put(
 router.put(
   "/update-avatar",
   isAuthenticated,
+    res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       let existsUser = await User.findById(req.user.id);
@@ -278,6 +282,7 @@ router.put(
 // update user addresses
 router.put(
   "/update-user-addresses",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -318,6 +323,7 @@ router.put(
 // delete user address
 router.delete(
   "/delete-user-address/:id",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -343,6 +349,7 @@ router.delete(
 // update user password
 router.put(
   "/update-user-password",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -378,6 +385,7 @@ router.put(
 // find user infoormation with the userId
 router.get(
   "/user-info/:id",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const user = await User.findById(req.params.id);
@@ -396,6 +404,7 @@ router.get(
 router.get(
   "/admin-all-users",
   isAuthenticated,
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -415,6 +424,7 @@ router.get(
 // delete users --- admin
 router.delete(
   "/delete-user/:id",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {

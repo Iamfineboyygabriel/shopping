@@ -13,6 +13,7 @@ const sendShopToken = require("../utils/shopToken");
 // create shop
 router.post(
   "/create-shop",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email } = req.body;
@@ -73,6 +74,7 @@ const createActivationToken = (seller) => {
 // activate user
 router.post(
   "/activation",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { activation_token } = req.body;
@@ -116,6 +118,7 @@ router.post(
 // login shop
 router.post(
   "/login-shop",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email, password } = req.body;
@@ -148,6 +151,7 @@ router.post(
 // load shop
 router.get(
   "/getSeller",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -170,6 +174,7 @@ router.get(
 // log out from shop
 router.get(
   "/logout",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       res.cookie("seller_token", null, {
@@ -192,6 +197,7 @@ router.get(
 // get shop info
 router.get(
   "/get-shop-info/:id",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   catchAsyncErrors(async (req, res, next) => {
     try {
       const shop = await Shop.findById(req.params.id);
@@ -208,6 +214,7 @@ router.get(
 // update shop profile picture
 router.put(
   "/update-shop-avatar",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -242,6 +249,7 @@ router.put(
 // update seller info
 router.put(
   "/update-seller-info",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -274,6 +282,7 @@ router.put(
 // all sellers --- for admin
 router.get(
   "/admin-all-sellers",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
@@ -294,6 +303,7 @@ router.get(
 // delete seller ---admin
 router.delete(
   "/delete-seller/:id",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isAuthenticated,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
@@ -321,6 +331,7 @@ router.delete(
 // update seller withdraw methods --- sellers
 router.put(
   "/update-payment-methods",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -343,6 +354,7 @@ router.put(
 // delete seller withdraw merthods --- only seller
 router.delete(
   "/delete-withdraw-method/",
+  res.header("Access-Control-Allow-Origin", "https://shopping-j2sb.vercel.app"),
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {

@@ -1,75 +1,3 @@
-// const express = require("express");
-// const ErrorHandler = require("./middleware/error");
-// const app = express();
-// const cookieParser = require("cookie-parser");
-// const bodyParser = require("body-parser");
-// const cors = require("cors");
-
-// // Frontend link, deployed on Vercel
-// app.use(
-//   cors({
-//     origin: "https://shopping-j2sb.vercel.app/",
-//     credentials: true,
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     allowedHeaders: "Content-Type, Authorization",
-//   })
-// );
-// git;
-// app.use(cors(corsOptions));
-// // app.use(
-// //   cors({
-// //     origin: "http://localhost:3001",
-// //     credentials: true,
-// //   })
-// // );
-
-// app.use(express.json());
-// app.use(cookieParser());
-// app.use("/test", (req, res) => {
-//   res.send("Hello world!");
-// });
-
-// app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-
-// // config
-// if (process.env.NODE_ENV !== "PRODUCTION") {
-//   require("dotenv").config({
-//     path: "config/.env",
-//   });
-// }
-
-// // import routes
-// const user = require("./controller/user");
-// const shop = require("./controller/shop");
-// const product = require("./controller/product");
-// const event = require("./controller/event");
-// const coupon = require("./controller/coupounCode");
-// const payment = require("./controller/payment");
-// const order = require("./controller/order");
-// const conversation = require("./controller/conversation");
-// const message = require("./controller/message");
-// const withdraw = require("./controller/withdraw");
-
-// app.use("/api/v2/user", user);
-// app.use("/api/v2/conversation", conversation);
-// app.use("/api/v2/message", message);
-// app.use("/api/v2/order", order);
-// app.use("/api/v2/shop", shop);
-// app.use("/api/v2/product", product);
-// app.use("/api/v2/event", event);
-// app.use("/api/v2/coupon", coupon);
-// app.use("/api/v2/payment", payment);
-// app.use("/api/v2/withdraw", withdraw);
-
-// // it's for ErrorHandling
-// app.use(ErrorHandler);
-
-// module.exports = app;
-
-
-
-
-
 const express = require("express");
 const ErrorHandler = require("./middleware/error");
 const app = express();
@@ -77,54 +5,26 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+// Frontend link, deployed on Vercel
+// Allow CORS for specific origin
+app.use(
+  cors({
+    origin: "https://shopping-j2sb.vercel.app",
+    credentials: true,
+    optionsSuccessStatus: 200, // Some older browsers choke on 204
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  })
+);
 
-
-// // Frontend link, deployed on Vercel
 // app.use(
-//   allowCors,
-//   express.json(),
-//   cookieParser(),
-//   (req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', 'https://shopping-j2sb.vercel.app');
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-//   },
-//   bodyParser.urlencoded({ extended: true, limit: '50mb' })
+//   cors({
+//     origin: "http://localhost:3001",
+//     credentials: true,
+//   })
 // );
 
-// https://shopping-j2sb.vercel.app
-
-const allowCors = fn => async (req, res) => {
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', 'https://shopping-j2sb.vercel.app')
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    return
-  }
-  return await fn(req, res)
-}
-
-const handler = (req, res) => {
-  const d = new Date()
-  res.end(d.toString())
-}
-
-module.exports = allowCors(handler)
-
-
-
-
 app.use(express.json());
-app.use(cors())
 app.use(cookieParser());
 app.use("/test", (req, res) => {
   res.send("Hello world!");
@@ -166,4 +66,5 @@ app.use("/api/v2/withdraw", withdraw);
 app.use(ErrorHandler);
 
 module.exports = app;
+
 
