@@ -6,18 +6,25 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 // Frontend link, deployed on Vercel
-// Allow CORS for specific origin
-app.use(
-  cors({
-    origin: "https://shopping-j2sb.vercel.app",
-    credentials: true,
-    optionsSuccessStatus: 200, // Some older browsers choke on 204
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type, Authorization",
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://shopping-j2sb.vercel.app",
+//     credentials: true,
+//     optionsSuccessStatus: 200, // Some older browsers choke on 204
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     allowedHeaders: "Content-Type, Authorization",
+//   })
+// );
 
-app.options("*", cors());
+// app.options("*", cors());
+
+const cors = require('cors');
+const corsOptions ={
+    origin:'https://shopping-j2sb.vercel.app', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
