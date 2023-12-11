@@ -41,8 +41,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "proxy":"https://shopping-j2sb.vercel.app"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

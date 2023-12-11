@@ -19,7 +19,7 @@ const cors = require("cors");
 // app.options("*", cors());
 
 const corsOrigin = {
-  origin: "https://shopping-j2sb.vercel.app", //or whatever port your frontend is using
+  origin: "https://shopping-j2sb.vercel.app/", //or whatever port your frontend is using
   credentials: true,
   optionSuccessStatus: 200,
 };
