@@ -18,13 +18,12 @@ const cors = require("cors");
 
 // app.options("*", cors());
 
-const cors = require('cors');
-const corsOptions ={
-    origin:'https://shopping-j2sb.vercel.app', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+const corsOrigin = {
+  origin: "https://shopping-j2sb.vercel.app", //or whatever port your frontend is using
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOrigin));
 
 app.use(express.json());
 app.use(cookieParser());
