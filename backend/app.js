@@ -1,46 +1,37 @@
 const express = require("express");
-const ErrorHandler = require("./middleware/error");
-const app = express();
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const cors = require("cors");
+const ErrorHandler = require("./middleware/error");
 
-// Frontend link, deployed on Vercel
-// app.use(
-//   cors({
-//     origin: "https://shopping-j2sb.vercel.app",
-//     credentials: true,
-//     optionsSuccessStatus: 200, // Some older browsers choke on 204
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     allowedHeaders: "Content-Type, Authorization",
-//   })
-// );
+const app = express();
 
-// app.options("*", cors());
+// CORS Configuration for Local Development
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionsSuccessStatus: 200, // Some older browsers choke on 204
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  })
+);
 
-const corsOrigin = {
-  origin: "https://shopping-j2sb.vercel.app/", //or whatever port your frontend is using
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOrigin));
+// Enable CORS for all routes
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
-app.use("/test", (req, res) => {
-  res.send("Hello world!");
-});
-
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
-// config
+// Load environment variables in development
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
     path: "config/.env",
   });
 }
 
-// import routes
+// Import routes
 const user = require("./controller/user");
 const shop = require("./controller/shop");
 const product = require("./controller/product");
@@ -63,7 +54,16 @@ app.use("/api/v2/coupon", coupon);
 app.use("/api/v2/payment", payment);
 app.use("/api/v2/withdraw", withdraw);
 
-// it's for ErrorHandling
+// Test route
+app.use("/test", (req, res) => {
+  res.send("Hello world!");
+});
+
+// Error handling middleware
 app.use(ErrorHandler);
 
 module.exports = app;
+
+// Instead of using export, set a property on the exports object
+exports.server = "http://localhost:8000/api/v2";
+
